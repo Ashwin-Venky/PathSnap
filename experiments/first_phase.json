@@ -1,0 +1,19 @@
+{
+  "trip": "00000000",
+  "partition": "student_test",
+  "method": "geometry-only Viterbi plumbing check",
+  "prediction_s": 0.09526008297689259,
+  "observations": 2503,
+  "matched": 2503,
+  "unmatched": 0,
+  "gap_boundaries": 0,
+  "restarts": 9,
+  "feasible": 2493,
+  "transitions": 2502,
+  "continuity": 0.9964028776978417,
+  "pieces": 10,
+  "labelled": 2503,
+  "accuracy": 0.9484618457850579,
+  "macro_f1": 0.8048018742914325,
+  "edit_error": 0.332089552238806
+}
