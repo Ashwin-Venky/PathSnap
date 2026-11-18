@@ -2,7 +2,7 @@
 
 `export.py` makes a readable CSV view of the **training** `.cache/train_XXXXXXXX.npz` arrays. One row is one GPS observation paired with one candidate directed road arc. The exporter writes only real candidates (`ids >= 0`), not padded `-1` slots. A trip ID and original observation index identify the GPS reading; `candidate_rank` identifies its slot among up to 12 nearby arcs; `candidate_arc_id` is the original zero-based row of that trip's `.arcs` file. Arc IDs are local to a trip and are metadata, not model features. CSV order is trip ID, observation index, then candidate rank.
 
-The organiser's **Assessment and Plagiarism Policy**, section 4, prohibits sharing derived datasets between teams. **Deliverables** requires a public repository containing data-processing source code, but does not expressly permit republication of derived candidate-level training data. Therefore the real preview and full CSV export are generated under ignored `clean_datasets/local/` and are **not committed** pending organiser permission. This folder contains the reproducible exporter and its schema; it does not contain evaluator data or student-test labels. Do not upload generated CSVs to a public branch without written organiser confirmation.
+This folder contains a 52-row representative preview and the complete training export: 1,554,307 candidate rows split across eight CSV files of at most 200,000 rows each (271,780,146 bytes total). It contains no evaluator data or student-test labels. The organiser's **Assessment and Plagiarism Policy**, section 4, prohibits sharing derived datasets between teams; written permission for this public export has not been obtained. Check this publication with the organiser before using or distributing these CSVs outside the team.
 
 ## Regenerate locally
 
@@ -11,11 +11,11 @@ From the repository root, after preparing the original training partition with `
 ```sh
 export PATHSNAP_DATA='/path/to/data-root'
 python -m scripts.prepare
-python -m clean_datasets.export --mode preview --cache-dir .cache --output-dir clean_datasets/local/preview
-python -m clean_datasets.export --mode full --cache-dir .cache --output-dir clean_datasets/local/full --max-rows-per-file 200000
+python -m clean_datasets.export --mode preview --cache-dir .cache --output-dir clean_datasets
+python -m clean_datasets.export --mode full --cache-dir .cache --output-dir clean_datasets --max-rows-per-file 200000
 ```
 
-The first command uses existing preprocessing code and creates or reuses `.cache/train_*.npz` files. The exporter itself reads the NPZs without changing them, the model, or the scoring code. It accepts **only** filenames beginning `train_` and requires exactly 80 training files. `preview` selects five distinct states, where available, from trip `00000002`: a labelled point, an ambiguous alignment, an unlabelled point, a candidate miss, and a radius-expanded point. Overlapping states may yield fewer than five observations. `full` processes all 80 trips and splits files after 200,000 candidate rows by default. Use a clean output directory when changing export options so old part files cannot be mistaken for a new run. These are local analysis views, not training inputs or official organiser scores.
+The first command uses existing preprocessing code and creates or reuses `.cache/train_*.npz` files. The exporter itself reads the NPZs without changing them, the model, or the scoring code. It accepts **only** filenames beginning `train_` and requires exactly 80 training files. `preview` selects five distinct states, where available, from trip `00000002`: a labelled point, an ambiguous alignment, an unlabelled point, a candidate miss, and a radius-expanded point. Overlapping states may yield fewer than five observations. `full` processes all 80 trips and splits files after 200,000 candidate rows by default. Use a clean output directory when changing export options so old part files cannot be mistaken for a new run. These are analysis views, not training inputs or official organiser scores.
 
 ## How the arrays were prepared
 

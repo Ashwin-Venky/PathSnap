@@ -71,7 +71,7 @@ def rows(trip_id, a, observations):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache-dir", type=Path, default=Path(".cache"))
-    parser.add_argument("--output-dir", type=Path, default=Path("clean_datasets/local"))
+    parser.add_argument("--output-dir", type=Path, default=Path("clean_datasets"))
     parser.add_argument("--mode", choices=("preview", "full"), required=True)
     parser.add_argument("--max-rows-per-file", type=int, default=200_000)
     args = parser.parse_args()
