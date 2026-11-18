@@ -42,7 +42,9 @@ async def lifespan(app):
     s=app.state
     tic=perf_counter()
     s.model=load_model()
-    s.beta=json.loads((ROOT/"artifacts/decoder.json").read_text())["beta"]
+    decoder=json.loads((ROOT/"artifacts/decoder.json").read_text())
+    s.beta=decoder["beta"]
+    s.projection_tolerance_m=decoder.get("projection_tolerance_m",0)
     s.mode=os.getenv("PATHSNAP_MODE","development")
     if s.mode not in ("development","evaluator"): raise ValueError("Unknown server mode")
     dev=s.mode=="development"
@@ -81,7 +83,7 @@ def run(req:Request):
         try:
             data=read_inputs(s.directory,req.trip_id)
             read_s=perf_counter()-tic
-            ids,parts,diag,timing=predict(data,s.model,s.beta)
+            ids,parts,diag,timing=predict(data,s.model,s.beta,s.projection_tolerance_m)
         except (ValueError,OSError):
             raise HTTPException(422,"Trip inputs could not be processed") from None
         ids.setflags(write=False)

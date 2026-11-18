@@ -7,7 +7,7 @@ import numpy as np
 from .data import ROOT,CFG,digest
 from .geometry import Geometry,candidates,FEATURES
 from .models import probabilities
-from .decoder import RoadPaths,decode,reconstruct
+from .decoder import RoadPaths,decode,reconstruct,corrected_candidates
 
 def load_model():
     path=ROOT/"artifacts/model.joblib"
@@ -18,7 +18,7 @@ def load_model():
         raise ValueError("Install the recorded model runtime versions")
     return joblib.load(path)
 
-def predict(data,model,beta):
+def predict(data,model,beta,projection_tolerance_m=0):
     start=perf_counter()
     g=Geometry(data)
     c=candidates(g)
@@ -26,8 +26,9 @@ def predict(data,model,beta):
     prepared=perf_counter()
     p=probabilities(model,c.ids,c.X)
     scored=perf_counter()
-    s,cut=decode(g,c,p,roads,beta)
-    ids,parts,diag=reconstruct(g,c,s,roads,cut)
+    projected=corrected_candidates(g,c,projection_tolerance_m)
+    s,cut=decode(g,projected,p,roads,beta)
+    ids,parts,diag=reconstruct(g,projected,s,roads,cut)
     done=perf_counter()
     diag.update(expanded=int(c.X[:,0,-1].sum()),zero_length_excluded=len(g.length)-len(g.valid))
     return ids,parts,diag,dict(features_s=prepared-start,classifier_s=scored-prepared,decoder_s=done-scored,inference_s=done-start)

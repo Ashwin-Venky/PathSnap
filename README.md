@@ -2,14 +2,34 @@
 
 PathSnap maps noisy vehicle observations to directed roads in a trip-specific network. A candidate classifier scores plausible segments. A log-space Viterbi decoder uses directed travel distance to reconstruct connected route pieces.
 
-The local development run compared five models on 80 training trips, tuned histogram gradient boosting over 25 TPE trials, and exercised the real UI and API for all ten student-test trips. The consolidated technical report is [available here](reports/PathSnap_Technical_Report.pdf). All three teammate contributions are merged. A fresh checkout contains the complete implementation and fitted artifact.
+The local development run compared five models on 80 training trips, tuned histogram gradient boosting over 25 TPE trials, and exercised the real UI and API for all ten student-test trips. The consolidated technical report is [available here](reports/PathSnap_Technical_Report.pdf). All three teammate contributions are merged. A fresh checkout contains the complete implementation and fitted artifact. The report predates the selected v4 decoder; use the measurements below for the demo.
 
 | Ten student-test trips, equal trip weight | Top-1 | Observation macro F1 | Directed continuity | Normalised edit error |
 |---|---:|---:|---:|---:|
 | Tuned classifier | 0.8912 | 0.7843 | 0.9087 | 0.5040 |
 | Classifier and Viterbi | 0.8630 | 0.8129 | 0.9874 | 0.3829 |
+| Selected v4 pure Viterbi, bounded projection | 0.9400 | 0.9058 | 0.9997 | 0.1085 |
 
-Point scores use approximate route-derived labels for 18,773 of 19,160 observations. Reserved trips, canonical point scoring and physical LAN verification remain pending.
+Point scores use approximate route-derived labels for 18,773 of 19,160 student observations. The separate evaluator set scored 0.9351 equal-trip with 16,894 of 19,674 labels; these are not official organiser scores. Canonical point scoring and physical LAN verification remain pending.
+
+## Selected one-laptop demo
+
+Run both services from this project root in separate terminals. Keep private `.route` references in the external data directory; the API scores only after prediction. The active decoder is `artifacts/decoder.json`: beta 4, 25 m bounded projection correction, pure Viterbi. The fitted `artifacts/model.joblib` is unchanged.
+
+```sh
+export PATHSNAP_DATA="/path/to/directory/containing/student_test"
+export OMP_NUM_THREADS=2
+python -m uvicorn src.api:app --host 127.0.0.1 --port 18521 --access-log
+```
+
+In the second terminal, with the same environment installed:
+
+```sh
+export PATHSNAP_SERVER="http://127.0.0.1:18521"
+python -m streamlit run ui.py --server.address 127.0.0.1 --server.port 18522 --browser.gatherUsageStats false
+```
+
+Open `http://127.0.0.1:18522` and select a student-test trip. Use Ctrl-C in each terminal to stop its service. The approximate evaluator `.route` score is supported server-side when the private route is present, and is explicitly labelled approximate; confirm any official scoring protocol with the organiser.
 
 ## Laptop 1 · model and API
 
@@ -63,7 +83,7 @@ python -m scripts.serving_manifest --mode evaluator --directory "$PATHSNAP_EVAL_
 python -m uvicorn src.api:app --host 0.0.0.0 --port 18521
 ```
 
-The optional custom point adapter reads `PRIVATE/TRIP/TRIP.points` only after prediction. Its contract is exactly one row per observation, in order, containing zero-based observation index and original arc ID. A value of -1 is unlabelled. Confirm this format and metric definition with the organiser before using an official mapping. Adapt the private scorer if their protocol differs. Missing files yield an unavailable scoring status while the route is returned. Missing evaluator inputs yield an empty list and an unavailable health status. Development scoring alone reads a .route sequence and applies the frozen approximate alignment.
+The optional custom point adapter reads `PRIVATE/TRIP/TRIP.points` only after prediction. Its contract is exactly one row per observation, in order, containing zero-based observation index and original arc ID. A value of -1 is unlabelled. Confirm this format and metric definition with the organiser before using an official mapping. Adapt the private scorer if their protocol differs. Missing files yield an unavailable scoring status while the route is returned. Missing evaluator inputs yield an empty list and an unavailable health status. When private `.route` files are available in either mode, server-side scoring uses the same frozen approximate alignment, clearly labelled as approximate.
 
 GET /health reports mode and cold model loading time. GET /trips returns manifest IDs. POST /predict accepts JSON such as `{"mode":"development","trip_id":"00000000"}`. Mode mismatch returns 409, unknown ID 404, malformed ID or extra fields 422. Results contain one predicted arc ID per observation (-1 means unmatched), connected arc lists and latitude/longitude geometry, full GPS, display network, aggregate metrics, diagnostics and timings. The inference function accepts observations/network plus immutable algorithm assets. A two-entry cache reuses drawing geometry keyed by network content. Every request rebuilds candidates, scores them and decodes the trip.
 

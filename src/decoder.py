@@ -4,6 +4,7 @@ import heapq
 import numpy as np
 from .data import CFG
 from .metrics import weights
+from .geometry import Candidates
 
 class RoadPaths:
     def __init__(self,g):
@@ -45,6 +46,30 @@ class RoadPaths:
 
 def bucket(budget):
     return int(128*2**max(0,np.ceil(np.log2(max(1,budget)/128))))
+
+def corrected_candidates(g,c,tolerance_m):
+    """Bound same-arc projection jitter before directed transition decoding.
+
+    A candidate projection may move forward to the prior corrected location
+    only when that location is within tolerance_m of the current GPS projection.
+    The decoder and route reconstruction use this same corrected geometry.
+    Feature extraction and classifier probabilities use the original geometry.
+    """
+    if tolerance_m<0: raise ValueError("Projection tolerance must be nonnegative")
+    frac=c.frac.copy()
+    previous={}
+    for i in range(len(frac)):
+        if g.dt[i]>CFG["gap_s"]: previous={}
+        current={}
+        for j,a in enumerate(c.ids[i]):
+            if a<0: continue
+            raw=float(c.frac[i,j])
+            ahead=previous.get(int(a),raw)
+            if ahead>raw and (ahead-raw)*g.length[a]<=tolerance_m:
+                frac[i,j]=ahead
+            current[int(a)]=float(frac[i,j])
+        previous=current
+    return Candidates(c.ids,frac,c.X)
 
 def travel_matrices(g,c,roads):
     """Compute path lengths in chunks to cap intermediate node-pair allocations."""
