@@ -1,0 +1,14 @@
+test_missing_evaluator_and_official_mapping (test_api.InterfaceChecks.test_missing_evaluator_and_official_mapping) ... ok
+test_predict_finishes_before_private_read (test_api.InterfaceChecks.test_predict_finishes_before_private_read) ... ok
+test_directed_bridge_duplicate_ids_and_breaks (test_decoder.DecoderChecks.test_directed_bridge_duplicate_ids_and_breaks) ... ok
+test_long_segment_and_original_arc_ids (test_geometry.GeometryChecks.test_long_segment_and_original_arc_ids) ... ok
+test_occurrences_and_gap (test_geometry.GeometryChecks.test_occurrences_and_gap) ... ok
+test_repeat_after_loop_and_distant_label (test_geometry.GeometryChecks.test_repeat_after_loop_and_distant_label) ... ok
+test_fresh_estimator_schema (test_models.ModelChecks.test_fresh_estimator_schema) ... ok
+test_misses_remain_in_denominator (test_models.ModelChecks.test_misses_remain_in_denominator) ... ok
+test_whole_trip_folds (test_models.ModelChecks.test_whole_trip_folds) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.046s
+
+OK

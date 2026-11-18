@@ -1,0 +1,62 @@
+[
+  {
+    "trip": "00000000",
+    "request_id": "e58cf987-861d-435b-9a38-76aea2c04a5e",
+    "original_request_id": "b7dc59ed-1af8-4648-ad68-f118875b6535",
+    "fingerprint": "c6b24d682492fe2c92f5f3d6e7c954fe40a32073462f5811bfad02e34f4646d6"
+  },
+  {
+    "trip": "00000007",
+    "request_id": "a1cb0ac5-91b6-426a-bf67-40ec86c99c6c",
+    "original_request_id": "fbd2512a-6777-44a5-b4d2-9c9c940e1687",
+    "fingerprint": "100cef95ebde176ba01c4b8364d73e40be8f94089457e7f7cc768f97c66f2e50"
+  },
+  {
+    "trip": "00000009",
+    "request_id": "652a89db-f5ac-448c-8bee-40458ca64f68",
+    "original_request_id": "fb9c5101-0bc1-4e55-9f9f-adf0fd4ed19a",
+    "fingerprint": "72918e3403245c1dd70c9c5be1b84c62ef16b11ac9c5dfcb519bf9242715fcad"
+  },
+  {
+    "trip": "00000040",
+    "request_id": "34f0d7c6-ceb8-47c5-b569-0767321954b3",
+    "original_request_id": "62b6259a-43c1-4f03-a829-f713ca7d2349",
+    "fingerprint": "fd786033c004ce52746a4af5bd85fea30c1f4196099e17f5fb677a888ba9a026"
+  },
+  {
+    "trip": "00000052",
+    "request_id": "7dafd55d-55fb-4a51-a3e8-af63b09b6970",
+    "original_request_id": "6962a7a0-19c9-422e-b0c5-e2cc0d1fc543",
+    "fingerprint": "f14ee4e41a1b6cd87146f2b8521c02b499aed4d0919f183be7aec95c8260bae7"
+  },
+  {
+    "trip": "00000056",
+    "request_id": "7fa3ec5b-c301-463a-9871-4aa6c57020f2",
+    "original_request_id": "6d4fc2ac-7044-4f90-ba84-df5d9c9306c8",
+    "fingerprint": "0b78633a3b66aa699163630341783be4ebbf8864a365aea79bba9922742bc14c"
+  },
+  {
+    "trip": "00000065",
+    "request_id": "515f500f-b1d8-4212-93a4-d8169dce47d0",
+    "original_request_id": "113170a5-ed15-4f52-9d20-450922fe8aab",
+    "fingerprint": "4493cba449b7c92da340018fcfe7a74943e9ffb87d9200d11bf104e52f000554"
+  },
+  {
+    "trip": "00000076",
+    "request_id": "cf91428f-69a6-4c60-8b5a-a1e142e16851",
+    "original_request_id": "66e204a9-fcfe-43dd-ab74-9dccc2e01cd8",
+    "fingerprint": "991dfd2d7b49b97dd2afbcea203d7b6766f3983d614acfb1c509d446251e6768"
+  },
+  {
+    "trip": "00000077",
+    "request_id": "b4ec515e-a0e3-47be-80a4-82a283c1780d",
+    "original_request_id": "a8b09026-ec3c-4257-b007-59608e4ba8e9",
+    "fingerprint": "c68f7c06f27ed58b52135533454ea11f2e802978e7bc724918b8a64ffe0f9ced"
+  },
+  {
+    "trip": "00000091",
+    "request_id": "e7f824ae-3912-4543-a845-58c19ff69af1",
+    "original_request_id": "628b52d5-998a-4525-8baa-e91cf72c8993",
+    "fingerprint": "3614db9518c9c2bddfba87e104eb0a4de05b1bf7ec3415abbc876d0dd6ee75b0"
+  }
+]

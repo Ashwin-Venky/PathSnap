@@ -1,0 +1,13 @@
+.cache/
+.venv*/
+__pycache__/
+*.pyc
+.DS_Store
+*.route
+*.track
+*.arcs
+*.nodes
+*.zip
+.private/
+.env*
+maps/*.html

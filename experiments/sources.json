@@ -1,0 +1,16 @@
+{
+  "data_archive": "4804b0399d1d56f4844b9c74e2f998aae0a281fb5947a1f47ad1bd013214d248",
+  "guidance_archive": "db368793f68c76baa8eaa30d783d376df50841287c29c43f6911feb98cab4367",
+  "documents": {
+    "Main Guidelines.pdf": "39ea126224f1d98ad873ae7e143ec04c25e942656986b000987255b93ee11641",
+    "Models and Training Guidelines.pdf": "a4a64a67fbdfc4b4c1f3f555520fc16f7ff185cc59f12196cce5ba2be63e7f80",
+    "Deliverables.pdf": "fbcf8a8655feed1ab2797a37ca2676002cfab8861fcf1563bf07ac268b359080",
+    "Assessment and Plagiarism Policy.pdf": "c6787af6cf9307b9c0b831f572285bee0087929be0af62253439324f7219e869",
+    "Dataset Exploration.pdf": "25650a8a8bdb2e3570062fbd0dae8b38a8f66dfb69423a299d23f1db991cd3a2"
+  },
+  "video_sha256": "3f7729321837f10136d097cc1721b492eeda0f3cf110de3b5ec6a78a801f9d4f",
+  "video_duration_s": 51.47,
+  "caption_streams": 0,
+  "faculty_email": "waived by Ashwin",
+  "reserved_trips": "unavailable"
+}

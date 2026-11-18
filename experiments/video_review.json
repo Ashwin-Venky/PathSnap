@@ -1,0 +1,14 @@
+{
+  "file": "Problem Statement.mp4",
+  "duration_s": 51.47,
+  "audio_stream": "AAC stereo 48 kHz",
+  "subtitle_streams": 0,
+  "method": "FFmpeg decoded the complete track to mono 16 kHz PCM. Local faster-whisper 1.2.1 base.en transcribed the full waveform with beam sizes 5 and 1. Both passes agreed on the technical terms and task. Visual frames were sampled at three-second intervals across the clip.",
+  "summary": [
+    ["0-13 s", "A moving vehicle records coordinates over time to form a GPS trajectory."],
+    ["13-25 s", "Buildings, interference and measurement errors displace observations from roads."],
+    ["25-33 s", "Identifying which roads were travelled is the map-matching problem."],
+    ["33-49 s", "Use the observed trajectory and the underlying network to recover the most likely sequence of roads. The closing identifies PathSnap."]
+  ],
+  "additional_requirements": "No additional quantitative scoring or implementation rule was heard. The route-sequence objective agrees with the written guidelines."
+}

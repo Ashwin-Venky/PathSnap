@@ -1,0 +1,6 @@
+*.pdf binary
+*.png binary
+*.joblib binary
+*.sqlite3 binary
+*.npz binary
+src/vendor/* -text -whitespace
