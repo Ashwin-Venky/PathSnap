@@ -2,10 +2,23 @@ import unittest
 import numpy as np
 from src.data import Inputs
 from src.geometry import Geometry,Candidates
-from src.decoder import decode,RoadPaths,reconstruct
+from src.decoder import decode,corrected_candidates,RoadPaths,reconstruct
 from src.metrics import edit_error
 
 class DecoderChecks(unittest.TestCase):
+    def test_projection_correction_is_bounded_and_resets_on_gap(self):
+        nodes=np.array([[0.,0.],[.001,0.]])
+        arcs=np.array([[0,1]])
+        track=np.array([[.0007,0.,0],[.0006,0.,1],[.0004,0.,2],[.0003,0.,102]])
+        g=Geometry(Inputs(track,nodes,arcs))
+        c=Candidates(np.zeros((4,1),int),np.array([[.7],[.6],[.4],[.3]]),np.zeros((4,1,1)))
+        corrected=corrected_candidates(g,c,15)
+        self.assertAlmostEqual(corrected.frac[1,0],.7)
+        self.assertAlmostEqual(corrected.frac[2,0],.4)
+        self.assertAlmostEqual(corrected.frac[3,0],.3)
+        self.assertLessEqual(np.max((corrected.frac-c.frac)*g.length[0]),15)
+        self.assertEqual(c.frac[1,0],.6)
+
     def test_directed_bridge_duplicate_ids_and_breaks(self):
         nodes=np.array([[0.,0.],[.0001,0.],[.0002,0.],[.0003,0.],[.001,0.],[.002,0.]])
         arcs=np.array([[0,1],[1,2],[1,2],[2,3],[4,5]])

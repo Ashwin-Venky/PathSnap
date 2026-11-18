@@ -13,8 +13,9 @@ class InterfaceChecks(unittest.TestCase):
     def test_predict_finishes_before_private_read(self):
         events=[]
         data=Inputs(np.array([[10.,50.,1]]),np.array([[10.,50.],[10.01,50.]]),np.array([[0,1]]))
-        def infer(inputs,model,beta):
+        def infer(inputs,model,beta,projection_tolerance_m):
             self.assertIs(inputs,data)
+            self.assertEqual(projection_tolerance_m,25)
             events.append('prediction')
             return np.array([0]),[[0]],{'observations':1},{'inference_s':.1}
         def private(mode,trip,root,inputs,ids,parts):
@@ -44,3 +45,9 @@ class InterfaceChecks(unittest.TestCase):
             p.mkdir()
             (p/(trip+'.points')).write_text('0 0\n')
             self.assertEqual(score('evaluator',trip,directory,data,np.array([0]),[])['accuracy'],1.)
+            (p/(trip+'.points')).unlink()
+            (p/(trip+'.route')).write_text('0\n')
+            route_data=Inputs(np.array([[10.,50.,1.]]),np.array([[10.,50.],[10.001,50.]]),np.array([[0,1]]))
+            approximate=score('evaluator',trip,directory,route_data,np.array([0]),[[0]])
+            self.assertEqual(approximate['status'],'approximate reference-derived accuracy')
+            self.assertEqual(approximate['coverage'],1.)

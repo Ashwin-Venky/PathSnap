@@ -1,14 +1,38 @@
 {
-  "beta": 32,
-  "grid_m": [
-    8,
-    16,
-    32
-  ],
-  "objective": "mean student-test trip macro F1",
-  "scores": {
-    "HMM-32": 0.8128823650112885,
-    "HMM-16": 0.8100685398489619,
-    "HMM-8": 0.8016931298584851
+  "beta": 4,
+  "selection": "Highest equal-trip point accuracy on the original 80 held-out training trips among tested beta 1,2,4,6,8,16,32,64,128,256 with 25 m bounded monotone projection; student-test confirmation; same candidate model and scoring",
+  "version": "development_v4",
+  "method": "pure_viterbi_with_bounded_monotone_projection",
+  "projection_tolerance_m": 25,
+  "validation": {
+    "partition": "original training trips",
+    "folds": 5,
+    "held_out_trips": 80,
+    "beta_grid": [
+      1,
+      2,
+      4,
+      6,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "selected_equal_trip_accuracy": 0.9249527810901412,
+    "selected_equal_trip_macro_f1": 0.8890976370626784,
+    "selected_equal_trip_edit_error": 0.14835759848566465,
+    "selected_equal_trip_continuity": 0.9988096628002381,
+    "selected_pieces": 361,
+    "selected_restarts": 212
+  },
+  "student_test_confirmation": {
+    "equal_trip_accuracy": 0.9399731239509753,
+    "equal_trip_macro_f1": 0.9057793711930675,
+    "equal_trip_edit_error": 0.10846262701303962,
+    "equal_trip_continuity": 0.9997485253130275,
+    "pieces": 17,
+    "restarts": 6
   }
 }
