@@ -1,0 +1,11 @@
+{
+  "model": "GaussianNB",
+  "parameters": {
+    "var_smoothing": 1e-07
+  },
+  "fit_s": 0.038049957947805524,
+  "seed": 352,
+  "warnings": [],
+  "cap": 320,
+  "status": "complete"
+}

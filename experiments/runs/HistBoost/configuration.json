@@ -1,0 +1,16 @@
+{
+  "model": "HistBoost",
+  "parameters": {
+    "max_iter": 70,
+    "learning_rate": 0.1,
+    "max_leaf_nodes": 23,
+    "l2_regularization": 1.0,
+    "early_stopping": false,
+    "random_state": 352
+  },
+  "fit_s": 1.0073341670213267,
+  "seed": 352,
+  "warnings": [],
+  "cap": 320,
+  "status": "complete"
+}
