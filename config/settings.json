@@ -1,0 +1,16 @@
+{
+  "seed": 352,
+  "gap_s": 60,
+  "heading_min_m": 4,
+  "candidate_radius_m": 50,
+  "expanded_radius_m": 160,
+  "candidate_k": 12,
+  "alignment_k": 16,
+  "label_max_m": 50,
+  "fit_groups_per_trip": 320,
+  "folds": 5,
+  "trials": 25,
+  "startup_trials": 5,
+  "speed_limit_mps": 55,
+  "gps_slack_m": 40
+}

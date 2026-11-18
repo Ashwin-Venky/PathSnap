@@ -1,0 +1,24 @@
+{
+  "features": [
+    "distance_m",
+    "projection_fraction",
+    "length_m",
+    "heading_cos",
+    "heading_sin",
+    "heading_valid",
+    "step_m",
+    "dt_s",
+    "speed_mps",
+    "turn_cos",
+    "out_degree",
+    "in_degree",
+    "relative_distance_m",
+    "expanded_radius"
+  ],
+  "sources": {
+    "settings.json": "af45c9f36d2fe64e6a7da624bbdf4dc35994b26ad2b04d1350e8fdf59add4536",
+    "alignment.py": "1476f975cb1101cfc073f852b262c77c8c0ee93943f7875c6a87fcb56fd6c476",
+    "geometry.py": "c75cc5c2d1ec790bb28ce1d40b204b8a8fe3074fc4d93eb600068a86ec390526",
+    "manifest.csv": "7b612ba724eeddd9a1161087c0f2b2f3603d596b1242505fc63ddee497ac2721"
+  }
+}
