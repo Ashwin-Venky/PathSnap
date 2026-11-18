@@ -1,0 +1,13 @@
+{
+  "model": "Logistic",
+  "parameters": {
+    "C": 1.0,
+    "max_iter": 300,
+    "random_state": 352
+  },
+  "fit_s": 0.11209241708274931,
+  "seed": 352,
+  "warnings": [],
+  "cap": 320,
+  "status": "complete"
+}

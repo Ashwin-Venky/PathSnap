@@ -1,0 +1,13 @@
+{
+  "model": "DecisionTree",
+  "parameters": {
+    "max_depth": 12,
+    "min_samples_leaf": 20,
+    "random_state": 352
+  },
+  "fit_s": 1.6468221249524504,
+  "seed": 352,
+  "warnings": [],
+  "cap": 320,
+  "status": "complete"
+}
