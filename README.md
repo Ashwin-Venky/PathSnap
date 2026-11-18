@@ -2,7 +2,7 @@
 
 PathSnap maps noisy vehicle observations to directed roads in a trip-specific network. A candidate classifier scores plausible segments. A log-space Viterbi decoder uses directed travel distance to reconstruct connected route pieces.
 
-The local development run compared five models on 80 training trips, tuned histogram gradient boosting over 25 TPE trials, and exercised the real UI and API for all ten student-test trips. The consolidated technical report is [available here](reports/PathSnap_Technical_Report.pdf). The public checkout becomes runnable after the three teammate handoffs in [HANDOFF.md](HANDOFF.md) are merged. The full local review bundle can run now.
+The local development run compared five models on 80 training trips, tuned histogram gradient boosting over 25 TPE trials, and exercised the real UI and API for all ten student-test trips. The consolidated technical report is [available here](reports/PathSnap_Technical_Report.pdf). All three teammate contributions are merged. A fresh checkout contains the complete implementation and fitted artifact.
 
 | Ten student-test trips, equal trip weight | Top-1 | Observation macro F1 | Directed continuity | Normalised edit error |
 |---|---:|---:|---:|---:|
@@ -63,7 +63,7 @@ python -m scripts.serving_manifest --mode evaluator --directory "$PATHSNAP_EVAL_
 python -m uvicorn src.api:app --host 0.0.0.0 --port 18521
 ```
 
-The optional official-point adapter reads `PRIVATE/TRIP/TRIP.points` only after prediction. Its contract is exactly one row per observation, in order, containing zero-based observation index and original arc ID. A value of -1 is unlabelled. Confirm this format and metric definition with the organiser before using an official mapping. Adapt the private scorer if their protocol differs. Missing files yield an unavailable scoring status while the route is returned. Missing evaluator inputs yield an empty list and an unavailable health status. Development scoring alone reads a .route sequence and applies the frozen approximate alignment.
+The optional custom point adapter reads `PRIVATE/TRIP/TRIP.points` only after prediction. Its contract is exactly one row per observation, in order, containing zero-based observation index and original arc ID. A value of -1 is unlabelled. Confirm this format and metric definition with the organiser before using an official mapping. Adapt the private scorer if their protocol differs. Missing files yield an unavailable scoring status while the route is returned. Missing evaluator inputs yield an empty list and an unavailable health status. Development scoring alone reads a .route sequence and applies the frozen approximate alignment.
 
 GET /health reports mode and cold model loading time. GET /trips returns manifest IDs. POST /predict accepts JSON such as `{"mode":"development","trip_id":"00000000"}`. Mode mismatch returns 409, unknown ID 404, malformed ID or extra fields 422. Results contain one predicted arc ID per observation (-1 means unmatched), connected arc lists and latitude/longitude geometry, full GPS, display network, aggregate metrics, diagnostics and timings. The inference function accepts observations/network plus immutable algorithm assets. A two-entry cache reuses drawing geometry keyed by network content. Every request rebuilds candidates, scores them and decodes the trip.
 
@@ -107,3 +107,16 @@ Stop and restart **the API process** and run `python -m scripts.reload_check --u
 4. Capture both physical device screens, record latency and network setup, and regenerate the report after team review.
 
 See [HANDOFF.md](HANDOFF.md) for ownership, file transfer, review commands and integration order. The concluding report page contains viva prompts. AI assistance supported project implementation, execution and drafting. Team members should record only the implementation changes, tests and analysis they personally perform.
+
+## Final integration acceptance
+
+Testing evidence is saved under experiments/acceptance/. To retain the original development outputs, use the output option on the acceptance scripts.
+
+```sh
+python -m scripts.integration --output experiments/acceptance
+python -m scripts.browser_check --output experiments/acceptance
+# Stop and restart the API before this comparison.
+python -m scripts.reload_check --url http://127.0.0.1:18521 --output experiments/acceptance
+```
+
+The .points format is a project-defined adapter. The supplied organiser documents provide no evidence of this file format. Confirm their scoring contract before final evaluation.

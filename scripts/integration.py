@@ -1,5 +1,6 @@
 """Exercise the HTTP contract on all ten trips, repeat one prediction and reject invalid requests."""
 import argparse
+from pathlib import Path
 from time import perf_counter
 import hashlib
 import json
@@ -34,4 +35,9 @@ def verify(url):
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--url",default="http://127.0.0.1:18521")
-    verify(p.parse_args().url)
+    p.add_argument("--output",type=Path)
+    args=p.parse_args()
+    if args.output:
+        RESULT=args.output
+        RESULT.mkdir(parents=True,exist_ok=True)
+    verify(args.url)

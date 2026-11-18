@@ -29,7 +29,7 @@ def capture(url):
             frame.locator(".leaflet-overlay-pane canvas").wait_for(timeout=45000)
             frame.locator(".leaflet-control-layers").wait_for()
             page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
-            if i==0: page.screenshot(path=str(ROOT/"figures/ui.png"))
+            if i==0: page.screenshot(path=str(RESULT/"ui.png"))
             rows.append(dict(trip=trip,ui_s=perf_counter()-tic,caption=label.inner_text(),map_rendered=True))
             save_json(RESULT/"ui_runs.json",rows)
         for name in ["train","student_test"]:
@@ -39,9 +39,14 @@ def capture(url):
                 page.goto(path.as_uri())
                 page.locator(".leaflet-overlay-pane canvas").wait_for()
                 page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
-                page.screenshot(path=str(ROOT/"figures"/(name+"_map.png")))
+                page.screenshot(path=str(RESULT/(name+"_map.png")))
         browser.close()
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--url",default="http://127.0.0.1:18522")
-    capture(p.parse_args().url)
+    p.add_argument("--output",type=Path)
+    args=p.parse_args()
+    if args.output:
+        RESULT=args.output
+        RESULT.mkdir(parents=True,exist_ok=True)
+    capture(args.url)

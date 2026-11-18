@@ -1,5 +1,6 @@
 """Compare persisted HTTP fingerprints with a fresh server process."""
 import argparse
+from pathlib import Path
 import hashlib
 import json
 import pandas as pd
@@ -8,7 +9,11 @@ from src.data import RESULT,save_json
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--url",required=True)
+    parser.add_argument("--output",type=Path)
     args=parser.parse_args()
+    if args.output:
+        RESULT=args.output
+        RESULT.mkdir(parents=True,exist_ok=True)
     records=[]
     expected=pd.read_csv(RESULT/"http.csv",dtype={"trip":str}).drop_duplicates("trip")
     for row in expected.itertuples():
